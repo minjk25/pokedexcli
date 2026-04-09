@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
+	startRepl()
 
-	fmt.Printf("%#v", cleanInput(" Happy    Birthday  "))
 }
