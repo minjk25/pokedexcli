@@ -11,7 +11,7 @@ func cleanInput(text string) []string {
 	return strings.Fields(strings.ToLower(text))
 }
 
-func startRepl() {
+func startRepl(cfg *config) {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -24,12 +24,13 @@ func startRepl() {
 		}
 
 		if command, ok := getCommand()[words[0]]; ok {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
 		} else {
 			fmt.Println("Unknown command")
+			fmt.Println()
 		}
 	}
 }
@@ -37,7 +38,7 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(cfg *config) error
 }
 
 func getCommand() map[string]cliCommand {
@@ -51,6 +52,16 @@ func getCommand() map[string]cliCommand {
 			name:        "help",
 			description: "Displays a help message",
 			callback:    commandHelp,
+		},
+		"map": {
+			name:        "map",
+			description: "Lists the next page of location areas",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Lists the previous page of location areas",
+			callback:    commandMapb,
 		},
 	}
 }
