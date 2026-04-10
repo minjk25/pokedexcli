@@ -1,16 +1,14 @@
 package main
 
-import "github.com/minjk25/pokedexcli/internal/pokeapi"
+import (
+	"time"
 
-type config struct {
-	pokeapiClient           pokeapi.Client
-	nextLocationAreaURL     *string
-	previousLocationAreaURL *string
-}
+	"github.com/minjk25/pokedexcli/internal/pokeapi"
+)
 
 func main() {
 	cfg := config{
-		pokeapiClient: pokeapi.NewClient(),
+		pokeapiClient: pokeapi.NewClient(5 * time.Second),
 	}
 	startRepl(&cfg)
 }
