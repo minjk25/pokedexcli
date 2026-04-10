@@ -5,10 +5,18 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/minjk25/pokedexcli/internal/pokeapi"
 )
 
 func cleanInput(text string) []string {
 	return strings.Fields(strings.ToLower(text))
+}
+
+type config struct {
+	pokeapiClient           pokeapi.Client
+	nextLocationAreaURL     *string
+	previousLocationAreaURL *string
 }
 
 func startRepl(cfg *config) {
