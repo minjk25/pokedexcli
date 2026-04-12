@@ -7,8 +7,10 @@ import (
 )
 
 func main() {
+	cacheInterval := time.Hour
+	timeout := 5 * time.Second
 	cfg := config{
-		pokeapiClient: pokeapi.NewClient(5 * time.Second),
+		pokeapiClient: pokeapi.NewClient(cacheInterval, timeout),
 	}
 	startRepl(&cfg)
 }
