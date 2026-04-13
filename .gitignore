@@ -1,2 +1,16 @@
+# Binary
 pokedexcli
+
+# Logs
 repl.log
+*.log
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
