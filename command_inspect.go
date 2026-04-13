@@ -10,7 +10,7 @@ func commandInspect(cfg *config, args ...string) error {
 		return errors.New("No pokemon name provided\n")
 	}
 	if len(args) > 1 {
-		return errors.New("One input only! You can catch one pokemon at a time\n")
+		return errors.New("One input only! You can inspect one pokemon at a time\n")
 	}
 	pokemonName := args[0]
 
