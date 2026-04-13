@@ -49,6 +49,8 @@ Pokedex > <command> [arguments]
 | pokedex |	none |	List all caught Pokemon |
 | exit |	none |	Exit the program |
 
+### Example
+<img src="demo_images/example.gif" width="500">
 
 ## Note
 This project was built as a learning exercise for Go from the [Boot.dev](https://www.boot.dev) backend course. I plan to expand it with more features over time to make it more interesting. Stay tuned!
