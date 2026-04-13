@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 )
 
@@ -16,9 +17,12 @@ func (c *Client) ListLocationAreas(pageURL *string) (LocationAreasResp, error) {
 
 	// check the cache
 	data, ok := c.cache.Get(fullURL)
+
+	// for debugging
+	slog.Debug("cache lookup", "url", fullURL, "cache hit", ok)
+
 	if ok {
-		// cache hit
-		fmt.Println("cache hit!")
+		// cache hit = true, using cache data instead of fetching the new one
 		locationAreas := LocationAreasResp{}
 		err := json.Unmarshal(data, &locationAreas)
 		if err != nil {
@@ -26,7 +30,6 @@ func (c *Client) ListLocationAreas(pageURL *string) (LocationAreasResp, error) {
 		}
 		return locationAreas, nil
 	}
-	fmt.Println("cache miss!")
 
 	// if there is no cache data then fetch the new one with new request
 	req, err := http.NewRequest("GET", fullURL, nil)
@@ -68,9 +71,12 @@ func (c *Client) GetLocationArea(locationAreaName string) (LocationArea, error) 
 
 	// check the cache
 	data, ok := c.cache.Get(fullURL)
+
+	// for debugging
+	slog.Debug("cache lookup", "url", fullURL, "cache hit", ok)
+
 	if ok {
-		// cache hit
-		fmt.Println("cache hit!")
+		// cache hit = true, using cache data instead of fetching the new one
 		locationArea := LocationArea{}
 		err := json.Unmarshal(data, &locationArea)
 		if err != nil {
@@ -78,7 +84,6 @@ func (c *Client) GetLocationArea(locationAreaName string) (LocationArea, error) 
 		}
 		return locationArea, nil
 	}
-	fmt.Println("cache miss!")
 
 	// if there is no cache data then fetch the new one with new request
 	req, err := http.NewRequest("GET", fullURL, nil)

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 )
 
@@ -13,9 +14,12 @@ func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
 
 	// check the cache
 	data, ok := c.cache.Get(fullURL)
+
+	// for debugging
+	slog.Debug("cache lookup", "url", fullURL, "cache hit", ok)
+
 	if ok {
-		// cache hit
-		fmt.Println("cache hit!")
+		// cache hit = true, using cache data instead of fetching the new one
 		pokemon := Pokemon{}
 		err := json.Unmarshal(data, &pokemon)
 		if err != nil {
@@ -23,7 +27,6 @@ func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
 		}
 		return pokemon, nil
 	}
-	fmt.Println("cache miss!")
 
 	// if there is no cache data then fetch the new one with new request
 	req, err := http.NewRequest("GET", fullURL, nil)

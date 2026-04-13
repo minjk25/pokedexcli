@@ -3,8 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"math/rand"
-	"time"
 )
 
 func commandCatch(cfg *config, args ...string) error {
@@ -23,9 +23,15 @@ func commandCatch(cfg *config, args ...string) error {
 
 	const threshold = 50
 	randNum := rand.Intn(pokemon.BaseExperience)
-	fmt.Println(pokemon.BaseExperience, randNum, threshold)
+
+	// for debugging
+	slog.Debug("catch attempt",
+		"baseExperience", pokemon.BaseExperience,
+		"randNum", randNum,
+		"threshold", threshold,
+	)
+
 	fmt.Printf("Throwing a Pokeball at %s...\n", pokemonName)
-	time.Sleep(time.Second)
 	if randNum > threshold {
 		return fmt.Errorf("%s escaped!\n", pokemonName)
 	}
