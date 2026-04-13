@@ -14,7 +14,11 @@ func commandCatch(cfg *config, args ...string) error {
 	if len(args) > 1 {
 		return errors.New("One input only! You can catch one pokemon at a time\n")
 	}
+
 	pokemonName := args[0]
+	if pokemon, ok := cfg.caughtPokemon[pokemonName]; ok {
+		return fmt.Errorf("You already caught '%s'!\n", pokemon.Name)
+	}
 
 	pokemon, err := cfg.pokeapiClient.GetPokemon(pokemonName)
 	if err != nil {
